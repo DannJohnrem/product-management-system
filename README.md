@@ -1,17 +1,11 @@
-# Admin Dashboard Project
+# Product Management System Project
 
-This project is an Admin Dashboard built with the latest versions of Vue.js and Laravel. It includes authentication, product management, and a bonus feature of a video player component. This `README.md` provides instructions for setting up and running the application.
+This project is an Product Management System built with the latest versions of Vue.js and Laravel. It includes authentication, product management. This `README.md` provides instructions for setting up and running the application.
 
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [Features](#features)
-- [Bonus Objective](#bonus-objective)
-- [Troubleshooting](#troubleshooting)
-- [License](#license)
 
 ## Prerequisites
 
