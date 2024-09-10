@@ -8,14 +8,19 @@
 
         <div class="p-4 bg-white rounded-lg shadow-xs">
             <!-- Search and Filter -->
-            <div class="mb-4">
-                <input v-model="search" @input="fetchProducts" placeholder="Search..." class="p-2 border">
-                <select v-model="category" @change="fetchProducts" class="p-2 ml-2 border">
-                    <option value="">All product</option>
-                    <option value="tablet">tablet</option>
-                    <option value="phone">phone</option>
-                    <option value="laptop">laptop</option>
-                </select>
+            <div class="flex justify-between mb-4">
+                <div class="flex">
+                    <input v-model="search" @input="fetchData" placeholder="Search..." class="p-2 border">
+                    <select v-model="category" @change="fetchData" class="p-3 ml-2 border w-36">
+                        <option value="">All products</option>
+                        <option v-for="categoryList in categoryLists" :key="categoryList.id" :value="categoryList.id">
+                            {{categoryList.type}}
+                        </option>
+                    </select>
+                </div>
+                <button @click="goToCreateProduct" class="px-4 py-2 text-white bg-blue-500 rounded-lg">
+                    Create Product
+                </button>
             </div>
             <table class="w-full whitespace-no-wrap">
                 <thead>
@@ -45,7 +50,7 @@
                 <Pagination
                     :links="products.links"
                     :current-page="products.current_page"
-                    @page-changed="fetchPageData"
+                    @page-changed="fetchData"
                 />
             </div>
         </div>
@@ -54,7 +59,7 @@
 
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import Pagination from '@/Components/Pagination.vue';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
@@ -65,26 +70,17 @@ const search = ref('');
 const category = ref('');
 const itemsPerPage = ref(10);
 
-// Fetch products from API
-const fetchProducts = async () => {
-    try {
-        const response = await axios.get('/api/v1/products', {
-            params: {
-                search: search.value,
-                category: category.value,
-                per_page: itemsPerPage.value
-            }
-        });
-        products.value = response.data;
-    } catch (error) {
-        console.error('Error fetching products:', error);
-    }
-};
+const categoryLists = [
+    {id: 'phone', type: 'phone'},
+    {id: 'tablet', type: 'tablet'},
+    {id: 'laptop', type: 'laptop'}
+];
 
-// Fetch products for a specific page
-const fetchPageData = async (url) => {
+// Fetch data (for initial load, search, filter, and pagination)
+const fetchData = async (url) => {
+    const requestUrl = typeof url === 'string' ? url : '/api/v1/products';
     try {
-        const response = await axios.get(url, {
+        const response = await axios.get(requestUrl, {
             params: {
                 search: search.value,
                 category: category.value,
@@ -93,7 +89,7 @@ const fetchPageData = async (url) => {
         });
         products.value = response.data;
     } catch (error) {
-        console.error('Error fetching page data:', error);
+        console.error('Error fetching data:', error);
     }
 };
 
@@ -102,15 +98,20 @@ const deleteProduct = async (id) => {
     if (confirm('Are you sure you want to delete this product?')) {
         try {
             await axios.delete(`/api/v1/products/${id}`);
-            fetchProducts();
+            fetchData();
         } catch (error) {
             console.error('Error deleting product:', error);
         }
     }
 };
 
+//lalagyan ko dito nang function for routing kapag vue lang gamit
+const goToCreateProduct = () => {
+    router.get(route('product.create'));
+};
+
 // Fetch products when the component is mounted
 onMounted(() => {
-    fetchProducts();
+    fetchData();
 });
 </script>

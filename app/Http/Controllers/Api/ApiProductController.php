@@ -19,7 +19,7 @@ class ApiProductController extends Controller
         if ($request->filled('search')) {
             $query->where(function ($q) use ($request) {
                 $q->where('name', 'like', '%' . $request->search . '%')
-                  ->orWhere('description', 'like', '%' . $request->search . '%');
+                    ->orWhere('description', 'like', '%' . $request->search . '%');
             });
         }
 
@@ -31,7 +31,7 @@ class ApiProductController extends Controller
         $perPage = $request->input('per_page', 10);
 
         // Paginate the results
-        $products = $query->paginate($perPage);
+        $products = $query->latest()->paginate($perPage);
 
         return response()->json($products);
     }
@@ -41,7 +41,41 @@ class ApiProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate request data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'category' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric',
+            'date' => 'required|date',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        try {
+            // Handle file uploads
+            $images = $request->file('images');
+            $imagePaths = [];
+            if ($images) {
+                foreach ($images as $image) {
+                    $path = $image->store('images', 'public');
+                    $imagePaths[] = $path;
+                }
+            }
+
+            // Create product
+            $product = Product::create([
+                'name' => $request->name,
+                'category' => $request->category,
+                'description' => $request->description,
+                'price' => $request->price,
+                'date' => $request->date,
+                'images' => json_encode($imagePaths), // Assuming images are stored as JSON
+            ]);
+
+            return response()->json($product, 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Something went wrong'], 500);
+        }
     }
 
     /**

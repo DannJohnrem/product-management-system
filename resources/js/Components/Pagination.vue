@@ -1,7 +1,7 @@
 <template>
     <div v-if="links.length > 0" class="flex items-center justify-between">
         <!-- Previous Page Link -->
-        <button
+        <!-- <button
             v-if="links.prev"
             @click="changePage(links.prev.url)"
             :class="['px-4 py-2 text-sm font-medium border rounded-lg', {
@@ -10,7 +10,7 @@
             }]"
         >
             &laquo; Previous
-        </button>
+        </button> -->
 
         <!-- Page Links -->
         <div class="flex flex-wrap items-center">
@@ -37,7 +37,7 @@
         </div>
 
         <!-- Next Page Link -->
-        <button
+        <!-- <button
             v-if="links.next"
             @click="changePage(links.next.url)"
             :class="['px-4 py-2 text-sm font-medium border rounded-lg', {
@@ -46,7 +46,7 @@
             }]"
         >
             Next &raquo;
-        </button>
+        </button> -->
     </div>
 </template>
 
