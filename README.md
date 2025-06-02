@@ -70,7 +70,7 @@ The application should now be accessible at http://localhost:8000.
 
 <hr>
 
-##Gallery
+## Gallery
 
 Login Page:
 
