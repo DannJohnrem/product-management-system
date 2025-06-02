@@ -69,6 +69,18 @@ This project is an Product Management System built with the latest versions of V
 The application should now be accessible at http://localhost:8000.
 
 <hr>
+
+##Gallery
+
+Login Page:
+
+![image](https://github.com/user-attachments/assets/fbbcd815-f154-4575-af27-1e16d1ac50fc)
+
+Register page:
+
+![image](https://github.com/user-attachments/assets/43493dbb-6bf4-4654-a169-94e56e4a3f6e)
+
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
