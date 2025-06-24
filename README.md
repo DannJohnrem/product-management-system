@@ -74,7 +74,12 @@ The application should now be accessible at http://localhost:8000.
 
 Login page:
 
-![image](https://github.com/user-attachments/assets/423b0162-4875-4c16-a68e-441f13bbff50)
+![image](https://github.com/user-attachments/assets/436f3f9a-a435-43e1-be85-8b1e5c0b383b)
+
+Register page:
+
+![image](https://github.com/user-attachments/assets/88190b1e-d77e-47f5-a08e-b151290313c0)
+
 
 Dashboard page:
 
